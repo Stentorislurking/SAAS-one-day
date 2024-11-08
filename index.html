@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unstoppable Timer</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    h1 {
+      font-size: 2em;
+      margin: 0.5em;
+    }
+    #timer {
+      font-size: 3em;
+      font-weight: bold;
+      color: #ff5733;
+    }
+    button {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Unstoppable Timer</h1>
+  <div id="timer">00:00:00</div>
+  <button onclick="startTimer()" id="startButton">Start Timer</button>
+
+  <script>
+    let startTime, timerInterval;
+
+    function startTimer() {
+      if (timerInterval) return; // Prevent starting multiple timers
+
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const hours = String(Math.floor((elapsed / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        const minutes = String(Math.floor((elapsed / (1000 * 60)) % 60)).padStart(2, '0');
+        const seconds = String(Math.floor((elapsed / 1000) % 60)).padStart(2, '0');
+        
+        document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
+      }, 1000);
+
+      document.getElementById('startButton').disabled = true; // Disable start button
+    }
+  </script>
+</body>
+</html>
